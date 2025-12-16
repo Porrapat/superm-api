@@ -32,6 +32,15 @@ struct Product {
     original_price: u32,
 }
 
+#[derive(Serialize)]
+struct ProductListItem {
+    id: u32,
+    name: String,
+    thumbnail: String,
+    final_price: u32,
+    original_price: u32,
+}
+
 fn get_all_products() -> Vec<Product> {
     dotenv().ok();
     let base_url = env::var("BASE_URL").unwrap_or_else(|_| "http://localhost:3000".to_string());
@@ -130,8 +139,20 @@ fn get_all_products() -> Vec<Product> {
     ]
 }
 
-async fn products_list() -> Json<Vec<Product>> {
-    Json(get_all_products())
+async fn products_list() -> Json<Vec<ProductListItem>> {
+    let products = get_all_products();
+    let list_items: Vec<ProductListItem> = products
+        .into_iter()
+        .map(|p| ProductListItem {
+            id: p.id,
+            name: p.name,
+            thumbnail: p.thumbnail,
+            final_price: p.final_price,
+            original_price: p.original_price,
+        })
+        .collect();
+    
+    Json(list_items)
 }
 
 async fn product_by_id(Path(id): Path<u32>) -> Result<Json<Vec<Product>>, StatusCode> {
