@@ -8,7 +8,8 @@ use axum::{
 };
 
 use tower_http::{
-    services::ServeDir
+    services::ServeDir,
+    cors::CorsLayer,
 };
 
 #[tokio::main]
@@ -22,7 +23,8 @@ async fn main() {
         .route("/", get(|| async { "Hello, SuperM API!" }))
         .route("/products-list", get(products::products_list))
         .route("/products/id/{id}", get(products::product_by_id))
-        .nest_service("/images", ServeDir::new("images"));
+        .nest_service("/images", ServeDir::new("images"))
+        .layer(CorsLayer::permissive());
 
     println!("SuperM API running at http://{}", addr);
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
