@@ -22,76 +22,79 @@ struct Product {
 }
 
 async fn products_list() -> Json<Vec<Product>> {
+    dotenv().ok();
+    let base_url = env::var("BASE_URL").unwrap_or_else(|_| "http://localhost:3000".to_string());
+
     Json(vec![
         Product {
             id: 4,
             name: "Apple".into(),
             original_price: 130,
             final_price: 100,
-            thumbnail: "http://localhost:3001/images/apple.jpg".into(),
+            thumbnail: format!("{}/images/apple.jpg", base_url),
         },
         Product {
             id: 5,
             name: "Cheese".into(),
             original_price: 500,
             final_price: 500,
-            thumbnail: "http://localhost:3001/images/cheese.jpg".into(),
+            thumbnail: format!("{}/images/cheese.jpg", base_url),
         },
         Product {
             id: 6,
             name: "Honey".into(),
             original_price: 500,
             final_price: 400,
-            thumbnail: "http://localhost:3001/images/honey.jpg".into(),
+            thumbnail: format!("{}/images/honey.jpg", base_url),
         },
         Product {
             id: 7,
             name: "Sugar".into(),
             original_price: 100,
             final_price: 100,
-            thumbnail: "http://localhost:3001/images/sugar.jpg".into(),
+            thumbnail: format!("{}/images/sugar.jpg", base_url),
         },
         Product {
             id: 1,
             name: "Tomato".into(),
             original_price: 120,
             final_price: 100,
-            thumbnail: "http://localhost:3001/images/tomato.jpg".into(),
+            thumbnail: format!("{}/images/tomato.jpg", base_url),
         },
         Product {
             id: 8,
             name: "Almonds".into(),
             original_price: 350,
             final_price: 300,
-            thumbnail: "http://localhost:3001/images/almonds.jpg".into(),
+            thumbnail: format!("{}/images/almonds.jpg", base_url),
         },
         Product {
             id: 9,
             name: "Bread".into(),
             original_price: 250,
             final_price: 200,
-            thumbnail: "http://localhost:3001/images/bread.jpg".into(),
+            thumbnail: format!("{}/images/bread.jpg", base_url),
         },
         Product {
             id: 10,
             name: "Chocolate chip cookie".into(),
             original_price: 250,
             final_price: 200,
-            thumbnail: "http://localhost:3001/images/cookie.jpg".into(),
+            thumbnail: format!("{}/images/cookie.jpg", base_url),
         },
         Product {
             id: 2,
             name: "Pineapple".into(),
             original_price: 200,
             final_price: 200,
-            thumbnail: "http://localhost:3001/images/pineapple.jpg".into(),
+            thumbnail: format!("{}/images/pineapple.jpg", base_url),
         },
         Product {
             id: 3,
             name: "Banana".into(),
             original_price: 50,
             final_price: 75,
-            thumbnail: "http://localhost:3001/images/banana.jpg".into(),
+            thumbnail: format!("{}/images/banana.jpg", base_url),
         },
     ])
 }
