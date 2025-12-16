@@ -1,3 +1,5 @@
+use dotenvy::dotenv;
+use std::env;
 use axum::{
     routing::get,
     Router,
@@ -5,14 +7,16 @@ use axum::{
 
 #[tokio::main]
 async fn main() {
-    let addr = "0.0.0.0:3000";
+    dotenv().ok();
+
+    let port = env::var("PORT").unwrap_or_else(|_| "3000".to_string());
+    let addr = format!("0.0.0.0:{}", port);
 
     let app = Router::new()
         .route("/", get(|| async { "Hello, World!" }));
 
-    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-
     println!("SuperM API running at http://{}", addr);
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
 
     axum::serve(listener, app).await.unwrap();
 }
