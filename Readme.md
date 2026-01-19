@@ -151,6 +151,12 @@ Serves static product images.
 - sugar.jpg
 - tomato.jpg
 
+## AI Tools Used
+
+- **Claude (via OpenRouter, VSCode + Cline)**  
+  Used as the primary coding assistant for converting all the resources into Axum code.
+
+All outputs from AI tools were reviewed, tested, and manually integrated by me.
 
 ## 📝 License
 
